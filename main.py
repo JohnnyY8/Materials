@@ -1,7 +1,12 @@
 # coding=utf-8
+
 import os
 import numpy as np
 import tensorflow as tf
+
+from dataprocess import *
+from trainer import *
+from model import *
 
 flags = tf.app.flags
 
@@ -11,12 +16,12 @@ flags.DEFINE_string(
     "Which gpu is assigned.")
 
 flags.DEFINE_string(
-    "path_4all_files",
+    "path_all_files",
     "./files",
     "The path for all files.")
 
 flags.DEFINE_string(
-    "path_4all_data",
+    "path_all_data",
     "./files/data",
     "The path for all data files.")
 
@@ -31,7 +36,7 @@ flags.DEFINE_string(
 #    "The path for saving summaries.")
 
 flags.DEFINE_string(
-    "path_4save_model",
+    "path_save_model",
     "./files/trained_model",
     "The path for saving model.")
 
@@ -70,13 +75,16 @@ flags.DEFINE_integer(
      1000,
      "How many times training through all train data.")
 
-flags.DEFINE_integer(
-     "nWeight",
-     10,
-     "The weighted for negative samples in objective funcion.")
-
 FLAGS = flags.FLAGS
-
 
 if __name__ == "__main__":
   
+  os.environ["CUDA_VISIBLE_DEVICES"] = FLAGS.gpuId
+  ins_dataprocess = DataProcess(FLAGS)
+
+
+
+
+
+
+
