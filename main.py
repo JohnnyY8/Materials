@@ -79,7 +79,7 @@ FLAGS = flags.FLAGS
 
 if __name__ == "__main__":
   
-  os.environ["CUDA_VISIBLE_DEVICES"] = FLAGS.gpuId
+  os.environ["CUDA_VISIBLE_DEVICES"] = FLAGS.gpu_id
   ins_dataprocess = DataProcess(FLAGS)
 
 
