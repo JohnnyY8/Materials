@@ -81,6 +81,8 @@ if __name__ == "__main__":
   
   os.environ["CUDA_VISIBLE_DEVICES"] = FLAGS.gpu_id
   ins_dataprocess = DataProcess(FLAGS)
+  ins_dataprocess.load_data_and_label()
+  print(ins_dataprocess.data.shape, ins_dataprocess.label.shape)
 
 
 

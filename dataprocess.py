@@ -11,39 +11,63 @@ class DataProcess:
 
     print("1.Be; 2.Li; 3.Si;")
     dic_elements = {1: "Be", 2: "Li", 3: "Si"}
-    choice = input("Please choose the element:")
+    choice = input("Please choose the element: ")
     self.name_element = dic_elements[choice]
-
-  def load_data_and_label(self):
-    self.load_data(), self.load_label()
-
-  def load_data(self):
-    print("1.position;")
-    dic_data = {1: "position"}
-    choice = input("Please choose the data:")
-    self.data = dic_data[choice]
 
     dic_num_atoms = {"Be": 54, "Li": 32, "Si": 64}
     self.num_atoms = dic_num_atoms[self.name_element]
 
+  def load_data_and_label(self):
+    self.load_single_data()
+    self.load_all_labels()
+    #self.load_single_label()
+
+  def load_single_data(self):
+    print("1.position;")
+    dic_names_data = {1: "position"}
+    choice = input("Please choose the data: ")
+    self.name_data = dic_names_data[choice]
+
     path_data_file = os.path.join(
         self.FLAGS.path_all_data,
         self.name_element,
-        self.data + ".dat")
+        self.name_data + ".npy")
 
-  def load_label(self):
-    print("1.force; 2.velocity; 3.energy;")
-    dic_label = {1: "force", 2: "velocity", 3: "energy"}
-    choice = input("Please choose the label:")
-    self.label = dic_label[choice]
+    self.data = np.load(path_data_file).reshape(-1, self.num_atoms * 3)
 
-    dic_num_properties = {
-        "force": self.num_atoms,
-        "velocity": self.num_atoms,
-        "energy": 1}
-    self.num_properties = dic_num_properties[self.label]
+    print("Loading " + self.name_data + " as single data is done.")
+
+  def load_single_label(self):
+    print("1.energy; 2.force; 3.velocity;")
+    dic_names_label = {1: "energy", 2: "force", 3: "velocity"}
+    choice = input("Please choose the label: ")
+    self.name_label = dic_names_label[choice]
 
     path_label_file = os.path.join(
         self.FLAGS.path_all_data,
         self.name_element,
-        self.label + ".dat")
+        self.name_label + ".npy")
+
+    if self.name_label == "energy":
+      self.label = np.load(path_label_file).reshape(-1, 1)
+    else:
+      self.label = np.load(path_label_file).reshape(-1, self.num_atoms * 3)
+
+    print("Loading " + self.name_label + " as single label is done.")
+
+  def load_all_labels(self):
+    print("1.energy; 2.force; 3.velocity;")
+    list_labels = ["energy", "force", "velocity"]
+
+    for ind, ele in enumerate(list_labels):
+      path_label_file = os.path.join(
+          self.FLAGS.path_all_data,
+          self.name_element,
+          ele + ".npy")
+      if ind == 0:
+        self.label = np.load(path_label_file)
+      else:
+        temp = np.load(path_label_file).reshape(-1, self.num_atoms * 3)
+        self.label = np.hstack((self.label, temp))
+    
+    print("Loading all labels is done.")
