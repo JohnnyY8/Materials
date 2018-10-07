@@ -3,7 +3,7 @@
 import numpy as np
 import tensorflow as tf
 
-from commonfunctions import *
+from commonfunction import *
 
 class Model(CommonFunction):
 
@@ -26,7 +26,9 @@ class Model(CommonFunction):
 
         name_variable_scope = "output_layer"
         with tf.variable_scope(name_variable_scope):
-          name_w, name_b, name_h = "w_output", "b_output", "h_output"
+          name_w, name_b = "w_output", "b_output"
+          name_z, name_h = "z_output", "h_output"
+
           w_output = self.init_weight_variable(
               name_w,
               [self.num_neurons[ind - 1], ele])
@@ -35,10 +37,11 @@ class Model(CommonFunction):
           b_output = self.init_bias_variable(name_b, [ele])
           #self.variable_summaries(bHidden)
 
-          self.h_output = tf.matmul(h_hidden, w_output) + b_output
+          self.z_output = tf.add(tf.matmul(h_hidden, w_output),
+              b_output, name = name_z)
           #self.variable_summaries(self.h_output)
 
-          self.y_output = tf.nn.softmax(self.h_output, name = name_h)
+          self.h_output = tf.nn.softmax(self.h_output, name = name_h)
           #self.variable_summaries(self.y_output)
 
       else:  # Hidden layers
@@ -47,6 +50,7 @@ class Model(CommonFunction):
         with tf.variable_scope(name_variable_scope):
           name_w, name_b = "w_hidden" + str(ind), "b_hidden" + str(ind)
           name_z, name_h = "z_hidden" + str(ind), "h_hidden" + str(ind)
+
           w_hidden = self.init_weight_variable(name_w,
               [self.num_neurons[ind - 1], ele])
           #self.variable_summaries(wHidden)

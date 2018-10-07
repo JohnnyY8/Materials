@@ -78,14 +78,16 @@ flags.DEFINE_integer(
 FLAGS = flags.FLAGS
 
 if __name__ == "__main__":
-  
   os.environ["CUDA_VISIBLE_DEVICES"] = FLAGS.gpu_id
   ins_dataprocess = DataProcess(FLAGS)
   ins_dataprocess.load_data_and_label()
   print(ins_dataprocess.data.shape, ins_dataprocess.label.shape)
 
+  num_neurons = [96, 22, 16, 12, 9, 193]
+  ins_model = Model(FLAGS, num_neurons)
+  ins_model.build_model_graph()
 
-
+  
 
 
 
