@@ -74,6 +74,8 @@ class Model(CommonFunction):
 
     self.get_least_squares_method()
 
+    self.init = tf.global_variables_initializer()
+
   def get_least_squares_method(self):
     name_variable_scope = "loss_layer"
 
