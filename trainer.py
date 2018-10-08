@@ -21,17 +21,6 @@ class Trainer:
       train_accu_old, train_accu_new, test_accu_best = 0.0, 0.0, 0.0
       num_epoches = 0
 
-      #self.trainWriter = tf.summary.FileWriter(
-      #    os.path.join(
-      #        self.FLAGS.path4Summaries,
-      #        "train"),
-      #    sess.graph)
-
-      #self.testWriter = tf.summary.FileWriter(
-      #    os.path.join(
-      #        self.FLAGS.path4Summaries,
-      #        "test"))
-
       saver = tf.train.Saver()
       sess.run(self.ins_model.init)
 
@@ -47,49 +36,16 @@ class Trainer:
               self.x_train[train_index[ind: ind + self.FLAGS.batch_size]], \
               self.y_train[train_index[ind: ind + self.FLAGS.batch_size]]
 
-          #ind4Summary = num4Epoches * math.ceil(
-          #    self.xTrain.shape[0] * 1.0 / self.FLAGS.batchSize) + \
-          #        ind / self.FLAGS.batchSize
+          train_loss, temp = sess.run(
+                [self.ins_model.loss,
+                 self.ins_model.train_step],
+                feed_dict = {
+                    self.ins_model.x_data: batch_xs,
+                    self.ins_model.y_label: batch_ys,
+                    self.ins_model.keep_prob: self.FLAGS.dropout_rate})
+          print(train_loss)
 
-          #if ind4Summary % 100 == 99:  # Record execution states
-          #  run_options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
-          #  run_metadata = tf.RunMetadata()
-          #  newTrainLoss, newTrainAccu, summary, tempTS = sess.run(
-          #      [self.insModel.loss,
-          #       self.insModel.accuracy,
-          #       self.insModel.merged,
-          #       self.insModel.trainStep],
-          #      feed_dict = {
-          #          self.insModel.xData: batchXs,
-          #          self.insModel.yLabel: batchYs,
-          #          self.insModel.keepProb: self.FLAGS.dropOutRate},
-          #      options = run_options,
-          #      run_metadata = run_metadata)
-
-          #  self.trainWriter.add_run_metadata(
-          #      run_metadata,
-          #      "step%d" % ind4Summary)
-          #  print("Adding run metadat for", ind4Summary)
-          #  self.trainWriter.add_summary(summary, ind4Summary)
-
-          #else:  # Record a summary
-          #  newTrainLoss, newTrainAccu, summary, tempTS = sess.run(
-          #      [self.insModel.loss,
-          #       self.insModel.accuracy,
-          #       self.insModel.merged,
-          #       self.insModel.trainStep],
-          #      feed_dict = {
-          #          self.insModel.xData: batchXs,
-          #          self.insModel.yLabel: batchYs,
-          #          self.insModel.keepProb: self.FLAGS.dropOutRate})
-          #  self.trainWriter.add_summary(summary, ind4Summary)
-
-          #self.insResultStorer.addLoss(newTrainLoss)
-          #self.insResultStorer.addTrainAccu(newTrainAccu)
-          #print("  The loss is %.6f. The training accuracy is %.6f..." % \
-          #    (newTrainLoss, newTrainAccu))
-
-          train_accu_old = train_accu_new
+          #train_accu_old = train_accu_new
 
         #summary, newValAccu = sess.run(
         #    [self.insModel.merged,
@@ -102,11 +58,11 @@ class Trainer:
         #self.insResultStorer.addValAccu(newValAccu)
         #print("    The validation accuracy is %.6f..." % (newValAccu))
 
-        if test_accu_new > test_accu_best:
-          test_accu_best = test_accu_new
-          save_path = saver.save(
-              sess,
-              os.path.join(self.FLAGS.path_save_model, "model.ckpt"))
+        #if test_accu_new > test_accu_best:
+        #  test_accu_best = test_accu_new
+        #  save_path = saver.save(
+        #      sess,
+        #      os.path.join(self.FLAGS.path_save_model, "model.ckpt"))
 
         if num_epoches >= self.FLAGS.train_epoches:
           print("The training process is done...")
@@ -117,4 +73,4 @@ class Trainer:
     #self.trainWriter.flush()
     #self.testWriter.flush()
 
-    return savePath
+    #return savePath
