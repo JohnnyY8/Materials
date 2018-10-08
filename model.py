@@ -41,7 +41,7 @@ class Model(CommonFunction):
               b_output, name = name_z)
           #self.variable_summaries(self.h_output)
 
-          self.h_output = tf.nn.softmax(self.h_output, name = name_h)
+          #self.h_output = tf.nn.softmax(self.h_output, name = name_h)
           #self.variable_summaries(self.y_output)
 
       else:  # Hidden layers
@@ -71,3 +71,23 @@ class Model(CommonFunction):
           #if ind == self.num_layers - 2:
           #  h_idden = tf.nn.dropout(h_hidden, self.keep_prob)
           #self.variable_summaries(hHidden)
+
+    self.get_least_squares_method()
+
+  def get_least_squares_method(self):
+    name_variable_scope = "loss_layer"
+
+    with tf.name_scope(name_variable_scope):
+      self.loss = tf.reduce_mean(tf.reduce_sum(tf.abs(self.y_label - self.z_output), axis = 1))
+
+    self.get_optimizer()
+
+  def get_optimizer(self):
+    self.train_step = tf.train.AdamOptimizer(self.FLAGS.learningRate).minimize(self.loss)
+
+
+
+
+
+
+
