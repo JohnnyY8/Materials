@@ -26,11 +26,6 @@ flags.DEFINE_string(
     "The path for all data files.")
 
 #flags.DEFINE_string(
-#    "path4SaveEggsFile",
-#    "./files",
-#    "The path for saving eggs file.")
-
-#flags.DEFINE_string(
 #    "path4Summaries",
 #    "./files/summaries",
 #    "The path for saving summaries.")
@@ -59,11 +54,6 @@ flags.DEFINE_float(
      "threshold_test",
      0.5,
      "The threshold for test data.")
-
-#flags.DEFINE_float(
-#     "threshold4Convegence",
-#     1e-40,
-#     "The threshold for training convegence.")
 
 flags.DEFINE_integer(
      "batch_size",
