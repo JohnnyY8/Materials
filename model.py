@@ -85,9 +85,3 @@ class Model(CommonFunction):
   def get_optimizer(self):
     self.train_step = tf.train.AdamOptimizer(self.FLAGS.learning_rate).minimize(self.loss)
 
-
-
-
-
-
-

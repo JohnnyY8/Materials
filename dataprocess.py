@@ -4,6 +4,8 @@ import os
 import numpy as np
 import tensorflow as tf
 
+from sklearn.cross_validation import train_test_split
+
 class DataProcess:
 
   def __init__(self, FLAGS):
@@ -71,3 +73,13 @@ class DataProcess:
         self.label = np.hstack((self.label, temp))
     
     print("Loading all labels is done.")
+
+  def split_data_2train_and_test(self):
+    x_train, x_test, y_train, y_test = train_test_split(
+        self.data,
+        self.label,
+        test_size = self.FLAGS.test_size,
+        random_state = 24)
+
+    return x_train, x_test, y_train, y_test
+

@@ -77,7 +77,8 @@ if __name__ == "__main__":
   ins_model = Model(FLAGS, num_neurons)
   ins_model.build_model_graph()
 
-  
+  ins_trainer = Trainer(FLAGS, ins_dataprocess, ins_model)
+  ins_trainer.train_dnn()
 
 
 
