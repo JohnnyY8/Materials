@@ -25,11 +25,6 @@ flags.DEFINE_string(
     "./files/data",
     "The path for all data files.")
 
-#flags.DEFINE_string(
-#    "path4Summaries",
-#    "./files/summaries",
-#    "The path for saving summaries.")
-
 flags.DEFINE_string(
     "path_save_model",
     "./files/trained_model",

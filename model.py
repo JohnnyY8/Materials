@@ -15,7 +15,6 @@ class Model(CommonFunction):
   def build_model_graph(self):
     with tf.name_scope("dropout"):
       self.keep_prob = tf.placeholder(tf.float32, name = "keep_prob")
-      #tf.summary.scalar("dropout_keep_probability", self.keep_prob)
 
     for ind, ele in enumerate(self.num_neurons):
       if ind == 0:  # Input layer
@@ -32,17 +31,13 @@ class Model(CommonFunction):
           w_output = self.init_weight_variable(
               name_w,
               [self.num_neurons[ind - 1], ele])
-          #self.variable_summaries(w_hidden)
 
           b_output = self.init_bias_variable(name_b, [ele])
-          #self.variable_summaries(bHidden)
 
           self.z_output = tf.add(tf.matmul(h_hidden, w_output),
               b_output, name = name_z)
-          #self.variable_summaries(self.h_output)
 
           #self.h_output = tf.nn.softmax(self.h_output, name = name_h)
-          #self.variable_summaries(self.y_output)
 
       else:  # Hidden layers
         name_variable_scope = "hidden" + str(ind) + "_layer"
@@ -53,10 +48,8 @@ class Model(CommonFunction):
 
           w_hidden = self.init_weight_variable(name_w,
               [self.num_neurons[ind - 1], ele])
-          #self.variable_summaries(wHidden)
 
           b_hidden = self.init_bias_variable(name_b, [ele])
-          #self.variable_summaries(bHidden)
 
           if ind == 1:
             z_hidden = tf.add(tf.matmul(self.x_data, w_hidden),
@@ -66,16 +59,15 @@ class Model(CommonFunction):
             z_hidden = tf.add(tf.matmul(h_hidden, w_hidden),
                 b_hidden, name = name_z)
             h_hidden = tf.nn.relu(z_hidden, name = name_h)
-          #self.variable_summaries(preAct)
 
           #if ind == self.num_layers - 2:
           #  h_idden = tf.nn.dropout(h_hidden, self.keep_prob)
-          #self.variable_summaries(hHidden)
 
     self.get_least_squares_method()
 
     self.init = tf.global_variables_initializer()
 
+  # Define a loss function of least squares method
   def get_least_squares_method(self):
     name_variable_scope = "loss_layer"
 
@@ -84,6 +76,7 @@ class Model(CommonFunction):
 
     self.get_optimizer()
 
+  # Get a optimizer
   def get_optimizer(self):
     self.train_step = tf.train.AdamOptimizer(self.FLAGS.learning_rate).minimize(self.loss)
 
