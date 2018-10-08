@@ -8,17 +8,22 @@ class Evaluation:
     self.num_atoms = ins_dataprocess.num_atoms
 
   def get_all_evaluation(self, true_values, predicted_values):
-    true_energy, predicted_energy = true_values[:, 0], predicted_values[:, 0]
+    true_energy, predicted_energy = \
+        true_values[:, 0], \
+        predicted_values[:, 0]
+    #print true_energy.shape, predicted_energy.shape
     self.evaluate_energy(true_energy, predicted_energy)
 
     true_force, predicted_force = \
         true_values[:, 1: self.num_atoms * 3 + 1], \
         predicted_values[:, 1: self.num_atoms * 3 + 1]
+    #print true_force.shape, predicted_force.shape
     self.evaluate_force(true_force, predicted_force)
 
     true_velocity, predicted_velocity = \
         true_values[:, self.num_atoms * 3 + 1: ], \
         predicted_values[:, self.num_atoms * 3 + 1: ]
+    #print true_velocity.shape, predicted_velocity.shape
     self.evaluate_velocity(true_velocity, predicted_velocity)
 
   def evaluate_energy(self, true_energy, predicted_energy):

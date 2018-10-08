@@ -46,8 +46,8 @@ class Trainer:
         print("  training loss: " + str(train_loss))
 
         batch_xs, batch_ys = \
-            self.x_test[: 151], \
-            self.y_test[: 151]
+            self.x_test[: 150], \
+            self.y_test[: 150]
         test_loss, z_output = sess.run(
             [self.ins_model.loss,
              self.ins_model.z_output],
