@@ -6,10 +6,11 @@ import tensorflow as tf
 
 class Trainer:
 
-  def __init__(self, FLAGS, ins_dataprocess, ins_model):
+  def __init__(self, FLAGS, ins_dataprocess, ins_model, ins_evaluation):
     self.FLAGS = FLAGS
     self.ins_dataprocess = ins_dataprocess
     self.ins_model = ins_model
+    self.ins_evaluation = ins_evaluation
 
   # Training and testing dnn model
   def train_dnn(self):
@@ -27,7 +28,7 @@ class Trainer:
         train_index = np.array(range(self.x_train.shape[0]))
         random.shuffle(train_index)
 
-        print("No.%d epoch:" % (num_epoches)),
+        print("No.%d epoch:" % (num_epoches))
         for ind in xrange(0, self.x_train.shape[0], self.FLAGS.batch_size):
 
           batch_xs, batch_ys = \
@@ -42,7 +43,21 @@ class Trainer:
                   self.ins_model.y_label: batch_ys,
                   self.ins_model.keep_prob: self.FLAGS.dropout_rate})
 
-        print(train_loss)
+        print("  training loss: " + str(train_loss))
+
+        batch_xs, batch_ys = \
+            self.x_test[: 151], \
+            self.y_test[: 151]
+        test_loss, z_output = sess.run(
+            [self.ins_model.loss,
+             self.ins_model.z_output],
+            feed_dict = {
+                self.ins_model.x_data: batch_xs,
+                self.ins_model.y_label: batch_ys,
+                self.ins_model.keep_prob: self.FLAGS.dropout_rate})
+
+        print("  test loss:" + str(test_loss))
+        self.ins_evaluation.get_all_evaluation(batch_ys, z_output)
 
         #if test_accu_new > test_accu_best:
         #  test_accu_best = test_accu_new

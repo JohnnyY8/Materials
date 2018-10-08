@@ -7,6 +7,7 @@ import tensorflow as tf
 from dataprocess import *
 from trainer import *
 from model import *
+from evaluation import *
 
 flags = tf.app.flags
 
@@ -69,12 +70,14 @@ if __name__ == "__main__":
   print("The shapes of data and label are: " + \
       str(ins_dataprocess.data.shape) + ", " + \
       str(ins_dataprocess.label.shape)) + '.'
+  raw_input("Press Enter to continue.")
 
   num_neurons = [96, 22, 16, 12, 9, 193]
   ins_model = Model(FLAGS, num_neurons)
   ins_model.build_model_graph()
 
-  ins_trainer = Trainer(FLAGS, ins_dataprocess, ins_model)
+  ins_evaluation = Evaluation(ins_dataprocess)
+  ins_trainer = Trainer(FLAGS, ins_dataprocess, ins_model, ins_evaluation)
   ins_trainer.train_dnn()
 
 
