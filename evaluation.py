@@ -27,16 +27,37 @@ class Evaluation:
     self.evaluate_velocity(true_velocity, predicted_velocity)
 
   def evaluate_energy(self, true_energy, predicted_energy):
-    res = np.mean(np.abs(np.subtract(true_energy, predicted_energy)))
-
-    print("The mean error of energy is: " + str(res))
+    mean_error_energy = np.mean(np.abs(np.subtract(true_energy, predicted_energy)))
+    print("  The mean error of energy is: " + str(mean_error_energy))
 
   def evaluate_force(self, true_force, predicted_force):
-    res = np.mean(np.abs(np.subtract(true_force, predicted_force)))
+    #print(true_force[: 2])
+    #print(predicted_force[: 2])
+    #raw_input("...")
+    mean_error_force = np.mean(np.abs(np.subtract(true_force, predicted_force)))
+    print("  The mean error of force is: " + str(mean_error_force))
 
-    print("The mean error of force is: " + str(res))
+    true_force, predicted_force = \
+        true_force.reshape(-1, 3), \
+        predicted_force.reshape(-1, 3)
+    mean_error_force_each_direction = np.mean(
+        np.abs(np.subtract(true_force, predicted_force)),
+        axis = 0)
+    print("  The mean error of force in each direction is: " + \
+        str(mean_error_force_each_direction))
 
   def evaluate_velocity(self, true_velocity, predicted_velocity):
-    res = np.mean(np.abs(np.subtract(true_velocity, predicted_velocity)))
+    #print(true_velocity[: 2])
+    #print(predicted_velocity[: 2])
+    #raw_input("...")
+    mean_error_velocity = np.mean(np.abs(np.subtract(true_velocity, predicted_velocity)))
+    print("  The mean error of velocity is: " + str(mean_error_velocity))
 
-    print("The mean error of velocity is: " + str(res))
+    true_velocity, predicted_velocity = \
+        true_velocity.reshape(-1, 3), \
+        predicted_velocity.reshape(-1, 3)
+    mean_error_velocity_each_direction = np.mean(
+        np.abs(np.subtract(true_velocity, predicted_velocity)),
+        axis = 0)
+    print("  The mean error of velocity in each direction is: " + \
+        str(mean_error_velocity_each_direction))
