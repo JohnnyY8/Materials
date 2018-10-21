@@ -9,6 +9,7 @@ class Evaluation:
 
   def get_all_evaluation(self, true_values, predicted_values):
     self.evaluate_force(true_values, predicted_values)
+
     #true_force, predicted_force = \
     #    true_values[:, 1: self.num_atoms * 3 + 1], \
     #    predicted_values[:, 1: self.num_atoms * 3 + 1]

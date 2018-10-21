@@ -1,5 +1,6 @@
 # coding=utf-8
 
+import os
 import random
 import numpy as np
 import tensorflow as tf
@@ -65,16 +66,16 @@ class Trainer:
 
           arr_test_loss = np.append(arr_test_loss, test_loss)
 
-          if arr_z_output == None:
+          if arr_z_output is None:
             arr_z_output = z_output
           else:
             arr_z_output = np.vstack((arr_z_output, z_output))
 
         mean_test_loss = np.mean(arr_test_loss)
         print("  test loss:" + str(mean_test_loss))
-        self.ins_evaluation.get_all_evaluation(y_test, z_output)
+        self.ins_evaluation.get_all_evaluation(self.y_test, arr_z_output)
 
-        if mean_test_loss < test_accu_best:
+        if mean_test_loss < test_loss_best:
           test_accu_best = mean_test_loss
           save_path = saver.save(
               sess,
