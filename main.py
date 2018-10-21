@@ -61,18 +61,26 @@ flags.DEFINE_integer(
      1000,
      "How many times training through all train data.")
 
+flags.DEFINE_integer(
+     "num_directions",
+     3,
+     "How many directions.")
+
 FLAGS = flags.FLAGS
 
 if __name__ == "__main__":
   os.environ["CUDA_VISIBLE_DEVICES"] = FLAGS.gpu_id
   ins_dataprocess = DataProcess(FLAGS)
   ins_dataprocess.load_data_and_label()
+
   print("The shapes of data and label are: " + \
       str(ins_dataprocess.data.shape) + ", " + \
       str(ins_dataprocess.label.shape)) + '.'
   raw_input("Press Enter to continue.")
 
-  num_neurons = [96, 22, 16, 12, 9, 193]
+  num_neurons = [ins_dataprocess.num_atoms * FLAGS.num_directions,
+      22, 16, 12, 9,
+      ins_dataprocess.num_atoms * FLAGS.num_directions]
   ins_model = Model(FLAGS, num_neurons)
   ins_model.build_model_graph()
 
