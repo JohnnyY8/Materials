@@ -35,8 +35,8 @@ class DataProcess:
         self.name_element,
         self.name_data + ".npy")
 
-    self.data = np.load(path_data_file).reshape(-1, self.num_atoms,
-        self.FLAGS.num_directions)
+    self.data = np.load(path_data_file).reshape(-1,
+        self.num_atoms * self.FLAGS.num_directions)
 
     print("Loading " + self.name_data + " as single data is done.")
 
@@ -68,8 +68,8 @@ class DataProcess:
       if ind == 0:
         self.label = np.load(path_label_file)
       else:
-        temp = np.load(path_label_file).reshape(-1, self.num_atoms,
-            self.FLAGS.num_directions)
+        temp = np.load(path_label_file).reshape(-1,
+            self.num_atoms * self.FLAGS.num_directions)
         self.label = np.hstack((self.label, temp))
     
     print("Loading all labels is done.")
