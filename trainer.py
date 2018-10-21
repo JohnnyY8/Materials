@@ -82,9 +82,10 @@ class Trainer:
               os.path.join(self.FLAGS.path_save_model, "model.ckpt"))
 
         if num_epoches >= self.FLAGS.train_epoches:
-          print("The training process is done...")
+          print("The training process is done.")
+          print("The mini test error is %f." % test_loss_best)
           print("The model saved in file:", save_path)
           break
         num_epoches += 1
 
-    #return save_path
+    return save_path

@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
   ins_evaluation = Evaluation(ins_dataprocess)
   ins_trainer = Trainer(FLAGS, ins_dataprocess, ins_model, ins_evaluation)
-  ins_trainer.train_dnn()
+  save_path = ins_trainer.train_dnn()
 
 
 
