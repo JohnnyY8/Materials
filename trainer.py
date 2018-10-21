@@ -18,22 +18,24 @@ class Trainer:
         self.ins_dataprocess.split_data_2train_and_test()
 
     with tf.Session() as sess:
-      train_accu_old, train_accu_new, test_accu_best = 0.0, 0.0, 0.0
+      train_accu_old, train_accu_new, test_loss_best = 0.0, 0.0, 1000.0
       num_epoches = 0
 
       saver = tf.train.Saver()
       sess.run(self.ins_model.init)
 
       while True:
+        batch_size = self.FLAGS.batch_size
+
+        # Training
         train_index = np.array(range(self.x_train.shape[0]))
         random.shuffle(train_index)
 
         print("No.%d epoch:" % (num_epoches))
-        for ind in xrange(0, self.x_train.shape[0], self.FLAGS.batch_size):
-
+        for ind in xrange(0, self.x_train.shape[0], batch_size):
           batch_xs, batch_ys = \
-              self.x_train[train_index[ind: ind + self.FLAGS.batch_size]], \
-              self.y_train[train_index[ind: ind + self.FLAGS.batch_size]]
+              self.x_train[train_index[ind: ind + batch_size]], \
+              self.y_train[train_index[ind: ind + batch_size]]
 
           train_loss, temp = sess.run(
               [self.ins_model.loss,
@@ -45,25 +47,38 @@ class Trainer:
 
         print("  training loss: " + str(train_loss))
 
-        batch_xs, batch_ys = \
-            self.x_test[: 150], \
-            self.y_test[: 150]
-        test_loss, z_output = sess.run(
-            [self.ins_model.loss,
-             self.ins_model.z_output],
-            feed_dict = {
-                self.ins_model.x_data: batch_xs,
-                self.ins_model.y_label: batch_ys,
-                self.ins_model.keep_prob: self.FLAGS.dropout_rate})
+        # Testing
+        arr_test_loss, arr_z_output = np.array([]), None
 
-        print("  test loss:" + str(test_loss))
-        self.ins_evaluation.get_all_evaluation(batch_ys, z_output)
+        for ind in xrange(0, self.x_test.shape[0], batch_size):
+          batch_xs, batch_ys = \
+              self.x_test[ind: ind + batch_size], \
+              self.y_test[ind: ind + batch_size]
 
-        #if test_accu_new > test_accu_best:
-        #  test_accu_best = test_accu_new
-        #  save_path = saver.save(
-        #      sess,
-        #      os.path.join(self.FLAGS.path_save_model, "model.ckpt"))
+          test_loss, z_output = sess.run(
+              [self.ins_model.loss,
+               self.ins_model.z_output],
+              feed_dict = {
+                  self.ins_model.x_data: batch_xs,
+                  self.ins_model.y_label: batch_ys,
+                  self.ins_model.keep_prob: self.FLAGS.dropout_rate})
+
+          arr_test_loss = np.append(arr_test_loss, test_loss)
+
+          if arr_z_output == None:
+            arr_z_output = z_output
+          else:
+            arr_z_output = np.vstack((arr_z_output, z_output))
+
+        mean_test_loss = np.mean(arr_test_loss)
+        print("  test loss:" + str(mean_test_loss))
+        self.ins_evaluation.get_all_evaluation(y_test, z_output)
+
+        if mean_test_loss < test_accu_best:
+          test_accu_best = mean_test_loss
+          save_path = saver.save(
+              sess,
+              os.path.join(self.FLAGS.path_save_model, "model.ckpt"))
 
         if num_epoches >= self.FLAGS.train_epoches:
           print("The training process is done...")
