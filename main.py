@@ -58,7 +58,7 @@ flags.DEFINE_integer(
 
 flags.DEFINE_integer(
      "train_epoches",
-     5000,
+     30,
      "How many times training through all train data.")
 
 flags.DEFINE_integer(
@@ -79,7 +79,7 @@ if __name__ == "__main__":
   raw_input("Press Enter to continue.")
 
   num_neurons = [ins_dataprocess.num_atoms * FLAGS.num_directions,
-      22, 16, 12, 9,
+      22, 16, 12, 9, 18,
       ins_dataprocess.num_atoms * FLAGS.num_directions]
   ins_model = Model(FLAGS, num_neurons)
   ins_model.build_model_graph()

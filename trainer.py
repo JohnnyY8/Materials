@@ -77,7 +77,7 @@ class Trainer:
         self.ins_evaluation.get_all_evaluation(self.y_test, arr_z_output)
 
         if mean_test_loss < test_loss_best:
-          test_accu_best = mean_test_loss
+          test_loss_best = mean_test_loss
           save_path = saver.save(
               sess,
               os.path.join(self.FLAGS.path_save_model, "model.ckpt"))
