@@ -58,7 +58,7 @@ flags.DEFINE_integer(
 
 flags.DEFINE_integer(
      "train_epoches",
-     30,
+     100,
      "How many times training through all train data.")
 
 flags.DEFINE_integer(
@@ -76,10 +76,12 @@ if __name__ == "__main__":
   print("The shapes of data and label are: " + \
       str(ins_dataprocess.data.shape) + ", " + \
       str(ins_dataprocess.label.shape)) + '.'
+  #print(ins_dataprocess.data[0][84: 87])
   raw_input("Press Enter to continue.")
 
   num_neurons = [ins_dataprocess.num_atoms * FLAGS.num_directions,
-      22, 16, 12, 9, 18,
+      ins_dataprocess.num_atoms, 
+      22, 16, 12, 9,
       ins_dataprocess.num_atoms * FLAGS.num_directions]
   ins_model = Model(FLAGS, num_neurons)
   ins_model.build_model_graph()
@@ -87,7 +89,5 @@ if __name__ == "__main__":
   ins_evaluation = Evaluation(ins_dataprocess)
   ins_trainer = Trainer(FLAGS, ins_dataprocess, ins_model, ins_evaluation)
   save_path = ins_trainer.train_dnn()
-
-
 
 
