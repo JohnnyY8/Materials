@@ -79,7 +79,9 @@ class Trainer:
           test_loss_best = mean_test_loss
           save_path = saver.save(
               sess,
-              os.path.join(self.FLAGS.path_save_model, "model.ckpt"))
+              os.path.join(self.FLAGS.path_save_model,
+                  self.ins_dataprocess.name_element,
+                  "model.ckpt"))
 
         if num_epoches >= self.FLAGS.train_epoches:
           print("The training process is done.")
