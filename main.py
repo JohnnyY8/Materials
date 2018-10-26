@@ -33,7 +33,7 @@ flags.DEFINE_string(
 
 flags.DEFINE_float(
     "test_size",
-     1e-3,
+     1e-1,
      "The rate for test data.")
 
 flags.DEFINE_float(
