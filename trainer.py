@@ -51,8 +51,7 @@ class Trainer:
         # Testing
         arr_test_loss, arr_z_output = np.array([]), None
 
-        #for ind in xrange(0, self.x_test.shape[0], batch_size):
-        for ind in xrange(0, batch_size, batch_size):
+        for ind in xrange(0, self.x_test.shape[0], batch_size):
           batch_xs, batch_ys = \
               self.x_test[ind: ind + batch_size], \
               self.y_test[ind: ind + batch_size]
@@ -85,7 +84,7 @@ class Trainer:
         if num_epoches >= self.FLAGS.train_epoches:
           print("The training process is done.")
           print("The mini test error is %f." % test_loss_best)
-          print("The model saved in file:", save_path)
+          print("The model saved in file: " +  save_path)
           break
         num_epoches += 1
 
