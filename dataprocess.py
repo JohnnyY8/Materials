@@ -18,6 +18,12 @@ class DataProcess:
 
     dic_num_atoms = {"Be": 54, "C": 64, "Li": 32, "NaCl": 216, "PbTe": 216, "Si": 64}
     self.num_atoms = dic_num_atoms[self.name_element]
+ 
+    dic_num_keyatoms = {"Be": 0, "C": 0, "Li": 12, "NaCl": 6, "PbTe": 6, "Si": 0}
+    self.num_keyatoms = dic_num_keyatoms[self.name_element]
+
+    dic_center_atoms = {"Be": 0, "C": 0, "Li": 29, "NaCl": 176, "PbTe": 41, "Si": 0}
+    self.center_atom = dic_center_atoms[self.name_element]
 
   def load_data_and_label(self):
     self.load_single_data()
