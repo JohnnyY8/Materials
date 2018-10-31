@@ -83,7 +83,7 @@ class Trainer:
                   self.ins_dataprocess.name_element,
                   "model.ckpt"))
 
-        if num_epoches >= self.FLAGS.train_epoches:
+        if num_epoches + 1 >= self.FLAGS.train_epoches:
           print("The training process is done.")
           print("The mini test error is %f." % test_loss_best)
           print("The model saved in file: " +  save_path)

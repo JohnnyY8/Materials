@@ -64,7 +64,7 @@ flags.DEFINE_integer(
 
 flags.DEFINE_integer(
      "train_epoches",
-     30,
+     1,
      "How many times training through all train data.")
 
 flags.DEFINE_integer(
