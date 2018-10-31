@@ -8,6 +8,7 @@ from dataprocess import *
 from trainer import *
 from model import *
 from evaluation import *
+from saliencydetector import *
 
 flags = tf.app.flags
 
@@ -63,7 +64,7 @@ flags.DEFINE_integer(
 
 flags.DEFINE_integer(
      "train_epoches",
-     100,
+     30,
      "How many times training through all train data.")
 
 flags.DEFINE_integer(

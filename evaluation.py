@@ -34,11 +34,11 @@ class Evaluation:
     true_force, predicted_force = \
         true_force.reshape(-1, 3), \
         predicted_force.reshape(-1, 3)
-    mean_error_force_each_direction = np.mean(
-        np.abs(np.subtract(true_force, predicted_force)),
-        axis = 0)
-    print("  The mean error of force in each direction is: " + \
-        str(mean_error_force_each_direction))
+    #mean_error_force_each_direction = np.mean(
+    #    np.abs(np.subtract(true_force, predicted_force)),
+    #    axis = 0)
+    #print("  The mean error of force in each direction is: " + \
+    #    str(mean_error_force_each_direction))
 
   def evaluate_energy(self, true_energy, predicted_energy):
     mean_error_energy = np.mean(np.abs(np.subtract(true_energy, predicted_energy)))

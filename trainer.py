@@ -72,7 +72,7 @@ class Trainer:
             arr_z_output = np.vstack((arr_z_output, z_output))
 
         mean_test_loss = np.mean(arr_test_loss)
-        print("  test loss:" + str(mean_test_loss))
+        print("  test loss: " + str(mean_test_loss))
         self.ins_evaluation.get_all_evaluation(self.y_test, arr_z_output)
 
         if mean_test_loss < test_loss_best:
