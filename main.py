@@ -95,4 +95,5 @@ if __name__ == "__main__":
   ins_trainer = Trainer(FLAGS, ins_dataprocess, ins_model, ins_evaluation)
   save_path = ins_trainer.train_dnn()
 
-
+  ins_saliencydetector = SaliencyDetector(FLAGS, ins_dataprocess, save_path)
+  ins_saliencydetector.cal_gradient()
