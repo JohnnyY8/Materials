@@ -42,6 +42,11 @@ flags.DEFINE_float(
      "The learning rate for training.")
 
 flags.DEFINE_float(
+     "delta",
+     1e-4,
+     "The offset for each point.")
+
+flags.DEFINE_float(
      "dropout_rate",
      0.5,
      "The dropout rate for model.")
