@@ -64,7 +64,7 @@ flags.DEFINE_integer(
 
 flags.DEFINE_integer(
      "train_epoches",
-     100,
+     150,
      "How many times training through all train data.")
 
 flags.DEFINE_integer(
@@ -83,18 +83,24 @@ if __name__ == "__main__":
       str(ins_dataprocess.data.shape) + ", " + \
       str(ins_dataprocess.label.shape)) + '.'
   #print(ins_dataprocess.data[0][84: 87])
-  raw_input("Press Enter to continue.")
+  #raw_input("Press Enter to continue.")
 
-  num_neurons = [ins_dataprocess.num_atoms * FLAGS.num_directions,
-      ins_dataprocess.num_atoms, 
-      22, 16, 12, 9,
-      ins_dataprocess.num_atoms * FLAGS.num_directions]
-  ins_model = Model(FLAGS, num_neurons)
-  ins_model.build_model_graph()
+  answer = raw_input("Do you want to retrain model? (y/n): ")
+  # Retrain model
+  if answer == 'y':
+    num_neurons = [ins_dataprocess.num_atoms * FLAGS.num_directions,
+        ins_dataprocess.num_atoms, 
+        22, 16, 12, 9,
+        ins_dataprocess.num_atoms * FLAGS.num_directions]
+    ins_model = Model(FLAGS, num_neurons)
+    ins_model.build_model_graph()
 
-  ins_evaluation = Evaluation(ins_dataprocess)
-  ins_trainer = Trainer(FLAGS, ins_dataprocess, ins_model, ins_evaluation)
-  save_path = ins_trainer.train_dnn()
-
+    ins_evaluation = Evaluation(ins_dataprocess)
+    ins_trainer = Trainer(FLAGS, ins_dataprocess, ins_model, ins_evaluation)
+    ins_trainer.train_dnn()
+  # Load pre-trained model
+  save_path = os.path.join(FLAGS.path_save_model, \
+      ins_dataprocess.name_element, \
+      "model.ckpt")
   ins_saliencydetector = SaliencyDetector(FLAGS, ins_dataprocess, save_path)
   ins_saliencydetector.cal_gradient()
