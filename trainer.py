@@ -90,4 +90,3 @@ class Trainer:
           break
         num_epoches += 1
 
-    return save_path

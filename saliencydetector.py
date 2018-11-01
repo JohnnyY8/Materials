@@ -44,7 +44,7 @@ class SaliencyDetector:
         np.array([]), np.array([]), np.array([])
 
     for ind in xrange(length):
-      print("-----------" + str(ind) + "--------------")
+      #print("-----------" + str(ind) + "--------------")
       batch_x[ind] += delta
       batch_x = batch_x.reshape(1, length)
       f_delta_all = \
