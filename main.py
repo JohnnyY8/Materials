@@ -64,7 +64,7 @@ flags.DEFINE_integer(
 
 flags.DEFINE_integer(
      "train_epoches",
-     150,
+     500,
      "How many times training through all train data.")
 
 flags.DEFINE_integer(
@@ -82,10 +82,8 @@ if __name__ == "__main__":
   print("The shapes of data and label are: " + \
       str(ins_dataprocess.data.shape) + ", " + \
       str(ins_dataprocess.label.shape)) + '.'
-  #print(ins_dataprocess.data[0][84: 87])
-  #raw_input("Press Enter to continue.")
 
-  answer = raw_input("Do you want to retrain model? (y/n): ")
+  answer = raw_input("Do you want to retrain model? [y/n]: ")
   # Retrain model
   if answer == 'y':
     num_neurons = [ins_dataprocess.num_atoms * FLAGS.num_directions,

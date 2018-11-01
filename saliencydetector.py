@@ -28,7 +28,7 @@ class SaliencyDetector:
   def cal_gradient(self):
     # Construct the grid
     length = self.ins_dataprocess.num_atoms * self.FLAGS.num_directions
-    index_atom = int(input("Please input the number of atom: "))
+    index_atom = int(input("Please input the number of grid: "))
     grid = self.ins_dataprocess.data[index_atom].reshape(1, length)
 
     # Calculate f(x).
