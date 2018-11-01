@@ -61,11 +61,11 @@ class SaliencyDetector:
     f_delta_z = temp_z_z.reshape(-1, self.FLAGS.num_directions)[:, 2]
     
     gradient_x_x = (f_delta_x - f_all[0]) / delta
-    print("The saliency on x aiex: " + str(self.select_max_gradient(gradient_x_x)))
+    print("The saliency on x axis: " + str(self.select_max_gradient(gradient_x_x)))
     gradient_y_y = (f_delta_y - f_all[1]) / delta
-    print("The saliency on y aiex: " + str(self.select_max_gradient(gradient_y_y)))
+    print("The saliency on y axis: " + str(self.select_max_gradient(gradient_y_y)))
     gradient_z_z = (f_delta_z - f_all[2]) / delta
-    print("The saliency on z aiex: " + str(self.select_max_gradient(gradient_z_z)))
+    print("The saliency on z axis: " + str(self.select_max_gradient(gradient_z_z)))
 
 
   def run_model(self, batch_x, batch_y):

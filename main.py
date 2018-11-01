@@ -88,7 +88,7 @@ if __name__ == "__main__":
   if answer == 'y':
     num_neurons = [ins_dataprocess.num_atoms * FLAGS.num_directions,
         ins_dataprocess.num_atoms, 
-        22, 16, 12, 9,
+        64, 32, 16, 8,
         ins_dataprocess.num_atoms * FLAGS.num_directions]
     ins_model = Model(FLAGS, num_neurons)
     ins_model.build_model_graph()
