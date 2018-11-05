@@ -19,16 +19,18 @@ class DataProcess:
     dic_num_atoms = {"Be": 54, "C": 64, "Li": 32, "NaCl": 216, "PbTe": 216, "Si": 64}
     self.num_atoms = dic_num_atoms[self.name_element]
  
-    dic_num_keyatoms = {"Be": 4, "C": 4, "Li": 12, "NaCl": 6, "PbTe": 24, "Si": 4}
+    dic_num_keyatoms = {"Be": 4, "C": 4, "Li": 12, "NaCl": 6, "PbTe": 12, "Si": 4}
     self.num_keyatoms = dic_num_keyatoms[self.name_element]
 
-    dic_center_atoms = {"Be": 0, "C": 16, "Li": 29, "NaCl": 176, "PbTe": 41, "Si": 0}
+    dic_center_atoms = {"Be": 41, "C": 16, "Li": 29, "NaCl": 176, "PbTe": 41, "Si": 1}
     self.center_atom = dic_center_atoms[self.name_element]
+
 
   def load_data_and_label(self):
     self.load_single_data()
     #self.load_all_labels()
     self.load_single_label()
+
 
   def load_single_data(self):
     print("1.position;")
@@ -45,6 +47,7 @@ class DataProcess:
         self.num_atoms * self.FLAGS.num_directions)
 
     print("Loading " + self.name_data + " as single data is done.")
+
 
   def load_single_label(self):
     print("1.force;")
@@ -63,6 +66,7 @@ class DataProcess:
 
     print("Loading " + self.name_label + " as single label is done.")
 
+
   def load_all_labels(self):
     print("1.energy; 2.force; 3.velocity;")
     list_labels = ["energy", "force", "velocity"]
@@ -80,6 +84,7 @@ class DataProcess:
         self.label = np.hstack((self.label, temp))
     
     print("Loading all labels is done.")
+
 
   def split_data_2train_and_test(self):
     x_train, x_test, y_train, y_test = train_test_split(
