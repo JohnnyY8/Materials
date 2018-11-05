@@ -39,7 +39,7 @@ flags.DEFINE_float(
 
 flags.DEFINE_float(
      "learning_rate",
-     1e-3,
+     1e-4,
      "The learning rate for training.")
 
 flags.DEFINE_float(
@@ -64,7 +64,7 @@ flags.DEFINE_integer(
 
 flags.DEFINE_integer(
      "train_epoches",
-     500,
+     1500,
      "How many times training through all train data.")
 
 flags.DEFINE_integer(
