@@ -44,7 +44,7 @@ class Trainer:
               feed_dict = {
                   self.ins_model.x_data: batch_xs,
                   self.ins_model.y_label: batch_ys,
-                  self.ins_model.keep_prob: self.FLAGS.dropout_rate})
+                  self.ins_model.keep_prob: self.FLAGS.dropout_rate_training})
 
         print("  training loss: " + str(train_loss))
 
@@ -62,7 +62,7 @@ class Trainer:
               feed_dict = {
                   self.ins_model.x_data: batch_xs,
                   self.ins_model.y_label: batch_ys,
-                  self.ins_model.keep_prob: self.FLAGS.dropout_rate})
+                  self.ins_model.keep_prob: self.FLAGS.dropout_rate_test})
 
           arr_test_loss = np.append(arr_test_loss, test_loss)
 

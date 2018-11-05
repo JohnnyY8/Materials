@@ -58,10 +58,13 @@ class Model(CommonFunction):
           else:
             z_hidden = tf.add(tf.matmul(h_hidden, w_hidden),
                 b_hidden, name = name_z)
+
+            z_hidden = tf.contrib.layers.batch_norm(z_hidden, 
+                scale = True, updates_collections = None)
+
             h_hidden = tf.nn.relu(z_hidden, name = name_h)
 
-          #if ind == self.num_layers - 2:
-          #  h_idden = tf.nn.dropout(h_hidden, self.keep_prob)
+            h_hidden = tf.nn.dropout(h_hidden, self.keep_prob)
 
     self.get_least_squares_method()
 

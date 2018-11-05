@@ -48,9 +48,14 @@ flags.DEFINE_float(
      "The offset for each point.")
 
 flags.DEFINE_float(
-     "dropout_rate",
+     "dropout_rate_training",
      0.5,
-     "The dropout rate for model.")
+     "The training dropout rate for model.")
+
+flags.DEFINE_float(
+     "dropout_rate_test",
+     1.0,
+     "The test dropout rate for model.")
 
 flags.DEFINE_float(
      "threshold_test",
