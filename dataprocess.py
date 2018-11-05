@@ -59,6 +59,7 @@ class DataProcess:
 
     self.label = np.load(path_label_file).reshape(-1,
         self.num_atoms * self.FLAGS.num_directions)
+    self.label_min, self.label_max = np.min(self.label), np.max(self.label)
 
     print("Loading " + self.name_label + " as single label is done.")
 

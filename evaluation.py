@@ -5,6 +5,7 @@ import numpy as np
 class Evaluation:
 
   def __init__(self, ins_dataprocess):
+    self.ins_dataprocess = ins_dataprocess
     self.num_atoms = ins_dataprocess.num_atoms
 
   def get_all_evaluation(self, true_values, predicted_values):
@@ -30,6 +31,16 @@ class Evaluation:
   def evaluate_force(self, true_force, predicted_force):
     mean_error_force = np.mean(np.abs(np.subtract(true_force, predicted_force)))
     print("  The mean error of force is: " + str(mean_error_force))
+
+    label_min, label_max = \
+        np.abs(self.ins_dataprocess.label_min), \
+        self.ins_dataprocess.label_max
+    if label_min > label_max:
+      temp = label_max
+    else:
+      temp = label_min
+    print("  The mean error rate of force is: " + \
+        str(mean_error_force / temp * 100) + '%')
 
     true_force, predicted_force = \
         true_force.reshape(-1, 3), \
