@@ -19,7 +19,7 @@ class DataProcess:
     dic_num_atoms = {"Be": 54, "C": 64, "Li": 32, "NaCl": 216, "PbTe": 216, "Si": 64}
     self.num_atoms = dic_num_atoms[self.name_element]
  
-    dic_num_keyatoms = {"Be": 4, "C": 4, "Li": 12, "NaCl": 6, "PbTe": 12, "Si": 4}
+    dic_num_keyatoms = {"Be": 12, "C": 4, "Li": 12, "NaCl": 12, "PbTe": 12, "Si": 4}
     self.num_keyatoms = dic_num_keyatoms[self.name_element]
 
     dic_center_atoms = {"Be": 41, "C": 16, "Li": 29, "NaCl": 176, "PbTe": 41, "Si": 1}
